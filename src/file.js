@@ -1,6 +1,7 @@
 import fs from 'fs';
-import { normalize, resolve, isAbsolute, basename } from 'path';
+import { normalize, resolve, isAbsolute, basename, extname, sep, dirname } from 'path';
 import { cwd } from 'process';
+import { stat } from "fs/promises";
 import { pipeline } from 'stream/promises';
 
 const formatPath = (path) => {
@@ -38,7 +39,7 @@ export const file = {
         }
     },
     async rn(oldFilePath, newFileName) {
-        const dirContent = await fs.promises.readdir(oldFilePath);
+        const dirContent = await fs.promises.readdir(dirname(formatPath(oldFilePath)));
         if (dirContent.includes(newFileName)) {
             console.log('File already exists');
             return;
@@ -57,6 +58,12 @@ export const file = {
         const source = formatPath(filePath);
         const destination = formatPath(dirPath);
         const fileName = basename(filePath);
+
+        const stats = await stat(destination);
+        if (!stats.isDirectory() || (extname(destination) && !destination.endsWith(sep))) {
+            console.log('Destination is not directory');
+            return 1;
+        }
 
         const dirContent = await fs.promises.readdir(destination);
         if (dirContent.includes(fileName)) {
