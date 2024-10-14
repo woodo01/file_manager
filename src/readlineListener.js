@@ -2,6 +2,7 @@ import readline from "readline";
 import {helper} from "./helper.js";
 import { cwd } from 'process';
 import {navigation} from "./navigation.js";
+import {osInfo} from "./osInfo.js";
 
 function echoLocation() {
     return `You are currently in ${cwd()}\n>`;
@@ -41,6 +42,27 @@ export const readlineListener = {
                         break;
                     case 'ls':
                         await navigation.ls()
+                        break;
+                    case 'os':
+                        switch (params[0]) {
+                            case '--architecture':
+                                osInfo.arch();
+                                break;
+                            case '--cpus':
+                                osInfo.cpu();
+                                break;
+                            case '--EOL':
+                                osInfo.eol();
+                                break;
+                            case '--homedir':
+                                osInfo.homedir();
+                                break;
+                            case '--username':
+                                osInfo.username();
+                                break;
+                            default:
+                                console.log('Invalid input');
+                        }
                         break;
                     case '.exit':
                         console.log(`Thank you for using File Manager, ${username}, goodbye!`);
