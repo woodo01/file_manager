@@ -14,8 +14,8 @@ export const file = {
         readableStream.on('data', (chunk) => {
             console.log('\n' + chunk);
         });
-        readableStream.on('error', () => {
-            console.error('Operation failed');
+        readableStream.on('error', (error) => {
+            console.error('Operation failed' + error.message);
         });
         readableStream.on('end', () => {
             console.log(`You are currently in ${cwd()}`);
