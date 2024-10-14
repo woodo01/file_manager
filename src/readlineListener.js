@@ -4,6 +4,7 @@ import { cwd } from 'process';
 import {navigation} from "./navigation.js";
 import {osInfo} from "./osInfo.js";
 import {file} from "./file.js";
+import {hash} from "./hash.js";
 
 function echoLocation() {
     return `You are currently in ${cwd()}\n>`;
@@ -82,6 +83,9 @@ export const readlineListener = {
                         break;
                     case 'rm':
                         await file.rm(params[0]);
+                        break;
+                    case 'hash':
+                        await hash(params[0]);
                         break;
                     case '.exit':
                         console.log(`Thank you for using File Manager, ${username}, goodbye!`);
