@@ -5,6 +5,7 @@ import {navigation} from "./navigation.js";
 import {osInfo} from "./osInfo.js";
 import {file} from "./file.js";
 import {hash} from "./hash.js";
+import {compress} from "./compress.js";
 
 function echoLocation() {
     return `You are currently in ${cwd()}\n>`;
@@ -86,6 +87,12 @@ export const readlineListener = {
                         break;
                     case 'hash':
                         await hash(params[0]);
+                        break;
+                    case 'compress':
+                        await compress.compressFile(params[0], params[1]);
+                        break;
+                    case 'decompress':
+                        await compress.decompressFile(params[0], params[1]);
                         break;
                     case '.exit':
                         console.log(`Thank you for using File Manager, ${username}, goodbye!`);
