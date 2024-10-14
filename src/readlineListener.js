@@ -3,6 +3,7 @@ import {helper} from "./helper.js";
 import { cwd } from 'process';
 import {navigation} from "./navigation.js";
 import {osInfo} from "./osInfo.js";
+import {file} from "./file.js";
 
 function echoLocation() {
     return `You are currently in ${cwd()}\n>`;
@@ -64,6 +65,24 @@ export const readlineListener = {
                                 console.log('Invalid input');
                         }
                         break;
+                    case 'cat':
+                        await file.cat(params[0]);
+                        break;
+                    case 'add':
+                        await file.add(params[0]);
+                        break;
+                    case 'rn':
+                        await file.rn(params[0], params[1]);
+                        break;
+                    case 'cp':
+                        await file.cp(params[0], params[1]);
+                        break;
+                    case 'mv':
+                        await file.mv(params[0], params[1]);
+                        break;
+                    case 'rm':
+                        await file.rm(params[0]);
+                        break;
                     case '.exit':
                         console.log(`Thank you for using File Manager, ${username}, goodbye!`);
                         readLineInterface.close();
@@ -72,7 +91,7 @@ export const readlineListener = {
                         console.log('Invalid input');
                 }
             } catch (error) {
-                console.error('Operation failed');
+                console.error('Operation failed: ' + error);
             }
 
             readLineInterface.setPrompt(echoLocation());

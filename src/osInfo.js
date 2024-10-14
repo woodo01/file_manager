@@ -1,7 +1,7 @@
 import os from 'os';
 
 export const osInfo = {
-    arch() {
+    cat() {
         console.log(`CPU architecture: ${os.arch()}`);
     },
     cpu() {
